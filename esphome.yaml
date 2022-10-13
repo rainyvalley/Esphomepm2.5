@@ -1,0 +1,53 @@
+esphome:
+  name: particle-sensor
+  platform: ESP8266
+  board: nodemcuv2
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  password: ""
+  
+ota:
+  password: ""
+
+wifi:
+  ssid: "YOUR_SSID"
+  password: "YOUR_PASSWORD"
+  use_address: "YOUR_STATIC_IP"
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Sensor2 Fallback Hotspot"
+    password: "sdkljflsd7892j"
+    
+captive_portal:
+
+uart:
+  tx_pin: D6
+  rx_pin: D7
+  baud_rate: 9600
+
+sensor:
+  - platform: pmsx003
+    type: PMSX003
+    pm_1_0:
+      name: "Particulate Matter <1.0µm Concentration"
+      filters:
+      - sliding_window_moving_average:
+          window_size: 5
+          send_every: 5
+    pm_2_5:
+      name: "Particulate Matter <2.5µm Concentration"
+      filters:
+      - sliding_window_moving_average:
+          window_size: 5
+          send_every: 5
+    pm_10_0:
+      name: "Particulate Matter <10.0µm Concentration"
+      filters:
+      - sliding_window_moving_average:
+          window_size: 5
+          send_every: 5
